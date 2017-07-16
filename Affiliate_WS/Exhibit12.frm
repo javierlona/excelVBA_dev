@@ -1,9 +1,9 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} Exhibit12 
-   Caption         =   "Affiliates Worksheet ver. 8_3_2016"
-   ClientHeight    =   5175
-   ClientLeft      =   45
-   ClientTop       =   375
+   Caption         =   "Affiliates Worksheet ver. 7_16_2017"
+   ClientHeight    =   5184
+   ClientLeft      =   48
+   ClientTop       =   372
    ClientWidth     =   9300
    OleObjectBlob   =   "Exhibit12.frx":0000
    StartUpPosition =   1  'CenterOwner

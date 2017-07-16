@@ -7,6 +7,10 @@ Public netProfit1OCEPCTotal As Double
 Public netProfit2OCEPCTotal As Double
 Public avgNetProfitOCEPCTotal As Double
 Public avgNetProfitAffTotal As Double
+Sub openform1()
+    Exhibit12.Show
+    
+End Sub
 
 Sub addEntity(ByVal string1 As String, ByVal numOfEntitiesToCreate As Integer)
     Dim ws As Worksheet
@@ -149,6 +153,7 @@ Sub addEntity(ByVal string1 As String, ByVal numOfEntitiesToCreate As Integer)
         Selection.Offset(2, 0).Select
         rowNumber = Selection.Row
     Next x
+    
 End Sub
 Sub calculateSums()
 
@@ -256,8 +261,8 @@ Sub calculateSums()
         Range("I" & CStr(rowNumber)) = "=SUM(" & Range("I" & CStr(rowNumber) - 2, "I" & CStr(rowNumber) - 1).Address(False, False) & ")"
         Range("J" & CStr(rowNumber)) = "=SUM(" & Range("J" & CStr(rowNumber) - 2, "J" & CStr(rowNumber) - 1).Address(False, False) & ")"
         Range("K" & CStr(rowNumber)) = "=SUM(" & Range("K" & CStr(rowNumber) - 2, "K" & CStr(rowNumber) - 1).Address(False, False) & ")"
-        
     End If
+    
 End Sub
 Sub calculateNetWorthNetProfit()
 
@@ -315,27 +320,26 @@ ErrHandler:
     
     'Calculate Affiliates section
     For Each aCell In MR
-    If aCell.Interior.Color = lColor Then
-        aCell.Select
-        rowNumber = Selection.Row
-        aCell.Select
-        Selection.Offset(0, 6).Select 'for net worth cells
-        netWorthAffEntry = Cells(rowNumber, "H").Value
-        netWorthAffTotal = netWorthAffEntry + netWorthAffTotal
-        
-        Selection.Offset(0, 1).Select 'for TR Net Profit 1st column cells
-        netProfit1AffEntry = Cells(rowNumber, "I").Value
-        netProfit1AffTotal = netProfit1AffEntry + netProfit1AffTotal
-        
-        Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
-        netProfit2AffEntry = Cells(rowNumber, "J").Value
-        netProfit2AffTotal = netProfit2AffEntry + netProfit2AffTotal
-        
-        Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
-        avgNetProfitAffEntry = Cells(rowNumber, "K").Value
-        avgNetProfitAffTotal = avgNetProfitAffEntry + avgNetProfitAffTotal
-    
-    End If
+        If aCell.Interior.Color = lColor Then
+            aCell.Select
+            rowNumber = Selection.Row
+            aCell.Select
+            Selection.Offset(0, 6).Select 'for net worth cells
+            netWorthAffEntry = Cells(rowNumber, "H").Value
+            netWorthAffTotal = netWorthAffEntry + netWorthAffTotal
+            
+            Selection.Offset(0, 1).Select 'for TR Net Profit 1st column cells
+            netProfit1AffEntry = Cells(rowNumber, "I").Value
+            netProfit1AffTotal = netProfit1AffEntry + netProfit1AffTotal
+            
+            Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
+            netProfit2AffEntry = Cells(rowNumber, "J").Value
+            netProfit2AffTotal = netProfit2AffEntry + netProfit2AffTotal
+            
+            Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
+            avgNetProfitAffEntry = Cells(rowNumber, "K").Value
+            avgNetProfitAffTotal = avgNetProfitAffEntry + avgNetProfitAffTotal
+        End If
     Next aCell
     
     strSearch = "NAME OF OC and/or EPC ENTITIES"
@@ -364,28 +368,28 @@ ErrHandler:
     
     'Calculate OC/EPC section
     For Each bCell In MR
-    If bCell.Interior.Color = lColor Then
-        bCell.Select
-        rowNumber = Selection.Row
-        bCell.Select
-        Selection.Offset(0, 6).Select 'for net worth cells
-        netWorthOCEPCEntry = Cells(rowNumber, "H").Value
-        netWorthOCEPCTotal = netWorthOCEPCEntry + netWorthOCEPCTotal
-        
-        Selection.Offset(0, 1).Select 'for TR Net Profit 1st colum cells
-        netProfit1OCEPCEntry = Cells(rowNumber, "I").Value
-        netProfit1OCEPCTotal = netProfit1OCEPCEntry + netProfit1OCEPCTotal
-        
-        Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
-        netProfit2OCEPCEntry = Cells(rowNumber, "J").Value
-        netProfit2OCEPCTotal = netProfit2OCEPCEntry + netProfit2OCEPCTotal
-        
-        Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
-        avgNetProfitOCEPCEntry = Cells(rowNumber, "K").Value
-        avgNetProfitOCEPCTotal = avgNetProfitOCEPCEntry + avgNetProfitOCEPCTotal
-    
-    End If
+        If bCell.Interior.Color = lColor Then
+            bCell.Select
+            rowNumber = Selection.Row
+            bCell.Select
+            Selection.Offset(0, 6).Select 'for net worth cells
+            netWorthOCEPCEntry = Cells(rowNumber, "H").Value
+            netWorthOCEPCTotal = netWorthOCEPCEntry + netWorthOCEPCTotal
+            
+            Selection.Offset(0, 1).Select 'for TR Net Profit 1st colum cells
+            netProfit1OCEPCEntry = Cells(rowNumber, "I").Value
+            netProfit1OCEPCTotal = netProfit1OCEPCEntry + netProfit1OCEPCTotal
+            
+            Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
+            netProfit2OCEPCEntry = Cells(rowNumber, "J").Value
+            netProfit2OCEPCTotal = netProfit2OCEPCEntry + netProfit2OCEPCTotal
+            
+            Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
+            avgNetProfitOCEPCEntry = Cells(rowNumber, "K").Value
+            avgNetProfitOCEPCTotal = avgNetProfitOCEPCEntry + avgNetProfitOCEPCTotal
+        End If
     Next bCell
+    
 End Sub
 Sub countentities()
 
@@ -420,21 +424,21 @@ Sub countentities()
     'Set MR = Range("B7:B" & lastRow)
     
     For Each aCell In MR
-    If aCell.Interior.Color = lColor Then
-        'MsgBox "Value Found in Cell " & aCell.Address
-        aCell.Select
-        rowNumber = Selection.Row
-        aCell.Select
-        counter = counter + 1
-        Selection.Offset(0, -1).Select
-        With Selection.Font
-            .Name = "Tahoma"
-            .Size = 14
-            .Bold = True
-        End With
-        Range("A" & CStr(rowNumber)) = counter
-    
-        'ActiveCell = counter.Value
-    End If
+        If aCell.Interior.Color = lColor Then
+            'MsgBox "Value Found in Cell " & aCell.Address
+            aCell.Select
+            rowNumber = Selection.Row
+            aCell.Select
+            counter = counter + 1
+            Selection.Offset(0, -1).Select
+            With Selection.Font
+                .Name = "Tahoma"
+                .Size = 14
+                .Bold = True
+            End With
+            Range("A" & CStr(rowNumber)) = counter
+        
+            'ActiveCell = counter.Value
+        End If
     Next aCell
 End Sub
