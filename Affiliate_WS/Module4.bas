@@ -8,15 +8,12 @@ Public netProfit2OCEPCTotal As Double
 Public avgNetProfitOCEPCTotal As Double
 Public avgNetProfitAffTotal As Double
 
-Sub addEntity(ByVal string1 As String, ByVal int1 As Integer)
+Sub addEntity(ByVal string1 As String, ByVal numOfEntitiesToCreate As Integer)
     Dim ws As Worksheet
     Dim lastRow As Long, i As Long
     Dim strSearch As String
     Dim aCell As Range
     Dim rowNumber As Integer
-    Dim numOfEntitiesToCreate
-    
-    numOfEntitiesToCreate = int1
     
     Set ws = Sheets("Sheet1")
     lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row

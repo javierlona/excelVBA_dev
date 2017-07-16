@@ -19,12 +19,12 @@ Private Sub CommandButton1_Click()
     Dim MyValOCEPC As Integer
     Dim MyValGA As Integer
     Dim MyValNGA As Integer
+    Dim string1 As String
     
     MyValOCEPC = Me.tbOCEPC.Value
     MyValGA = Me.tbGA.Value
     MyValNGA = Me.tbNGA.Value
     
-    Dim string1 As String
     If MyValOCEPC <> 0 Then
         string1 = "NAME OF OC and/or EPC ENTITIES"
         Call addEntity(string1, MyValOCEPC)
