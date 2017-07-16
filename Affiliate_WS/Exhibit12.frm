@@ -13,31 +13,32 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Public MyValOCEPC As Integer
-Public MyValGA As Integer
-Public MyValNGA As Integer
-
 Private Sub CommandButton1_Click()
-
     Activesheet.Unprotect ("txcdc1!")
+    
+    Dim MyValOCEPC As Integer
+    Dim MyValGA As Integer
+    Dim MyValNGA As Integer
+    
     MyValOCEPC = Me.tbOCEPC.Value
     MyValGA = Me.tbGA.Value
     MyValNGA = Me.tbNGA.Value
     
-    Dim int1 As Integer
     Dim string1 As String
+    If MyValOCEPC <> 0 Then
+        string1 = "NAME OF OC and/or EPC ENTITIES"
+        Call addEntity(string1, MyValOCEPC)
+    End If
     
-    string1 = "NAME OF OC and/or EPC ENTITIES"
-    int1 = MyValOCEPC
-    Call showNS(string1, int1)
+    If MyValGA <> 0 Then
+        string1 = "NAME OF NON-GUARANTOR AFFILIATES"
+        Call addEntity(string1, MyValNGA)
+    End If
     
-    string1 = "NAME OF NON-GUARANTOR AFFILIATES"
-    int1 = MyValNGA
-    Call showNS(string1, int1)
-    
-    string1 = "NAME OF GUARANTOR AFFILIATES"
-    int1 = MyValGA
-    Call showNS(string1, int1)
+    If MyValNGA <> 0 Then
+        string1 = "NAME OF GUARANTOR AFFILIATES"
+        Call addEntity(string1, MyValGA)
+    End If
     
     Call countentities
     

@@ -1,5 +1,4 @@
 Attribute VB_Name = "Module4"
-Public MyValOCEPC As Integer
 Public netWorthAffTotal As Double
 Public netProfit1AffTotal As Double
 Public netProfit2AffTotal As Double
@@ -8,15 +7,16 @@ Public netProfit1OCEPCTotal As Double
 Public netProfit2OCEPCTotal As Double
 Public avgNetProfitOCEPCTotal As Double
 Public avgNetProfitAffTotal As Double
-Sub showNS(ByVal string1 As String, ByVal int1 As Integer)
-    MsgBox "Procedure ShowNS " & string1 & " " & int1
+
+Sub addEntity(ByVal string1 As String, ByVal int1 As Integer)
     Dim ws As Worksheet
     Dim lastRow As Long, i As Long
     Dim strSearch As String
     Dim aCell As Range
     Dim rowNumber As Integer
+    Dim numOfEntitiesToCreate
     
-    MyValOCEPC = int1
+    numOfEntitiesToCreate = int1
     
     Set ws = Sheets("Sheet1")
     lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
@@ -35,7 +35,7 @@ Sub showNS(ByVal string1 As String, ByVal int1 As Integer)
     'MyIB1 = InputBox("How Many EPCs and/or OCs?")
     'For x = 1 To MyIB1
     
-    For x = 1 To MyValOCEPC
+    For x = 1 To numOfEntitiesToCreate
         Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove 'additional row for dates
         Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
         Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
@@ -155,290 +155,289 @@ Sub showNS(ByVal string1 As String, ByVal int1 As Integer)
 End Sub
 Sub calculateSums()
 
-Dim ws As Worksheet
-Dim lastRow As Long, i As Long
-Dim strSearch As String
-Dim strSearch2 As String
-Dim strSearch3 As String
-Dim strSearch4 As String
-Dim strSearch5 As String
-Dim strSearch6 As String
-Dim strSearch7 As String
-Dim aCell As Range
-Dim rowNumber As Integer
-Dim epcocrowa As Integer
-Dim epcocrowb As Integer
-Dim affiliatea As Integer
-Dim affiliateb As Integer
-
-Set ws = Sheets("Sheet1")
-lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
-strSearch = "NAME OF OC and/or EPC ENTITIES"
-strSearch2 = "NAME OF GUARANTOR AFFILIATES"
-strSearch3 = "TOTAL EPC AND OC"
-strSearch4 = "NAME OF GUARANTOR AFFILIATES"
-strSearch5 = "TOTAL EPC AND OC"
-strSearch6 = "TOTAL AFFILIATES"
-strSearch7 = "GRAND TOTAL"
-
-'calculates epc and oc entities
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    epcocrowa = Selection.Row
-End If
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch2, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    epcocrowb = Selection.Row
-End If
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch3, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    rowNumber = Selection.Row
-    'set cell value equal to variable
-    Range("H" & CStr(rowNumber)).Value = netWorthOCEPCTotal
-    Range("I" & CStr(rowNumber)).Value = netProfit1OCEPCTotal
-    Range("J" & CStr(rowNumber)).Value = netProfit2OCEPCTotal
-    Range("K" & CStr(rowNumber)).Value = avgNetProfitOCEPCTotal
-End If
-
-'calculates affiliates
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch4, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    affiliatea = Selection.Row
-End If
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch5, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    affiliateb = Selection.Row
-End If
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch6, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    rowNumber = Selection.Row
-    'set cell value equal to variable
-    Range("H" & CStr(rowNumber)).Value = netWorthAffTotal
-    Range("I" & CStr(rowNumber)).Value = netProfit1AffTotal
-    Range("J" & CStr(rowNumber)).Value = netProfit2AffTotal
-    Range("K" & CStr(rowNumber)).Value = avgNetProfitAffTotal
-End If
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch7, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    rowNumber = Selection.Row
-    'grand total row
-    Range("H" & CStr(rowNumber)) = "=SUM(" & Range("H" & CStr(rowNumber) - 2, "H" & CStr(rowNumber) - 1).Address(False, False) & ")"
-    Range("I" & CStr(rowNumber)) = "=SUM(" & Range("I" & CStr(rowNumber) - 2, "I" & CStr(rowNumber) - 1).Address(False, False) & ")"
-    Range("J" & CStr(rowNumber)) = "=SUM(" & Range("J" & CStr(rowNumber) - 2, "J" & CStr(rowNumber) - 1).Address(False, False) & ")"
-    Range("K" & CStr(rowNumber)) = "=SUM(" & Range("K" & CStr(rowNumber) - 2, "K" & CStr(rowNumber) - 1).Address(False, False) & ")"
+    Dim ws As Worksheet
+    Dim lastRow As Long, i As Long
+    Dim strSearch As String
+    Dim strSearch2 As String
+    Dim strSearch3 As String
+    Dim strSearch4 As String
+    Dim strSearch5 As String
+    Dim strSearch6 As String
+    Dim strSearch7 As String
+    Dim aCell As Range
+    Dim rowNumber As Integer
+    Dim epcocrowa As Integer
+    Dim epcocrowb As Integer
+    Dim affiliatea As Integer
+    Dim affiliateb As Integer
     
-End If
+    Set ws = Sheets("Sheet1")
+    lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
+    strSearch = "NAME OF OC and/or EPC ENTITIES"
+    strSearch2 = "NAME OF GUARANTOR AFFILIATES"
+    strSearch3 = "TOTAL EPC AND OC"
+    strSearch4 = "NAME OF GUARANTOR AFFILIATES"
+    strSearch5 = "TOTAL EPC AND OC"
+    strSearch6 = "TOTAL AFFILIATES"
+    strSearch7 = "GRAND TOTAL"
+    
+    'calculates epc and oc entities
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        epcocrowa = Selection.Row
+    End If
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch2, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        epcocrowb = Selection.Row
+    End If
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch3, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        rowNumber = Selection.Row
+        'set cell value equal to variable
+        Range("H" & CStr(rowNumber)).Value = netWorthOCEPCTotal
+        Range("I" & CStr(rowNumber)).Value = netProfit1OCEPCTotal
+        Range("J" & CStr(rowNumber)).Value = netProfit2OCEPCTotal
+        Range("K" & CStr(rowNumber)).Value = avgNetProfitOCEPCTotal
+    End If
+    
+    'calculates affiliates
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch4, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        affiliatea = Selection.Row
+    End If
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch5, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        affiliateb = Selection.Row
+    End If
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch6, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        rowNumber = Selection.Row
+        'set cell value equal to variable
+        Range("H" & CStr(rowNumber)).Value = netWorthAffTotal
+        Range("I" & CStr(rowNumber)).Value = netProfit1AffTotal
+        Range("J" & CStr(rowNumber)).Value = netProfit2AffTotal
+        Range("K" & CStr(rowNumber)).Value = avgNetProfitAffTotal
+    End If
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch7, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        rowNumber = Selection.Row
+        'grand total row
+        Range("H" & CStr(rowNumber)) = "=SUM(" & Range("H" & CStr(rowNumber) - 2, "H" & CStr(rowNumber) - 1).Address(False, False) & ")"
+        Range("I" & CStr(rowNumber)) = "=SUM(" & Range("I" & CStr(rowNumber) - 2, "I" & CStr(rowNumber) - 1).Address(False, False) & ")"
+        Range("J" & CStr(rowNumber)) = "=SUM(" & Range("J" & CStr(rowNumber) - 2, "J" & CStr(rowNumber) - 1).Address(False, False) & ")"
+        Range("K" & CStr(rowNumber)) = "=SUM(" & Range("K" & CStr(rowNumber) - 2, "K" & CStr(rowNumber) - 1).Address(False, False) & ")"
+        
+    End If
 End Sub
 Sub calculateNetWorthNetProfit()
 
-Dim lColor As Long
-Dim ws As Worksheet
-Dim lastRow As Long, i As Long
-Dim strSearch As String
-Dim aCell As Range
-Dim bCell As Range
-Dim rowNumber As Integer
-Dim netWorthAffEntry As Double
-Dim netProfit1AffEntry As Double
-Dim netProfit2AffEntry As Double
-Dim netWorthOCEPCEntry As Double
-Dim netProfit1OCEPCEntry As Double
-Dim netProfit2OCEPCEntry As Double
-Dim avgNetProfitOCEPCEntry As Double
-Dim avgNetProfitAffEntry As Double
-Dim lastRowforOCEPC As Integer
-
-'error handling
-On Error GoTo ErrHandler:
+    Dim lColor As Long
+    Dim ws As Worksheet
+    Dim lastRow As Long, i As Long
+    Dim strSearch As String
+    Dim aCell As Range
+    Dim bCell As Range
+    Dim rowNumber As Integer
+    Dim netWorthAffEntry As Double
+    Dim netProfit1AffEntry As Double
+    Dim netProfit2AffEntry As Double
+    Dim netWorthOCEPCEntry As Double
+    Dim netProfit1OCEPCEntry As Double
+    Dim netProfit2OCEPCEntry As Double
+    Dim avgNetProfitOCEPCEntry As Double
+    Dim avgNetProfitAffEntry As Double
+    Dim lastRowforOCEPC As Integer
+    
+    'error handling
+    On Error GoTo ErrHandler:
 ErrHandler:
-    If Err.Number = 13 Then 'Type Mismatch
-         mistake = MsgBox("You typed text in a cell field(s) which only accepts numbers." & vbCr & vbCr & "Check the cell fields to the right of the blue rows.", 48, "Type Mismatch Error")
-        Exit Sub
+        If Err.Number = 13 Then 'Type Mismatch
+             mistake = MsgBox("You typed text in a cell field(s) which only accepts numbers." & vbCr & vbCr & "Check the cell fields to the right of the blue rows.", 48, "Type Mismatch Error")
+            Exit Sub
+        End If
+    
+    Set ws = Sheets("Sheet1")
+    lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
+    strSearch = "NAME OF GUARANTOR AFFILIATES"
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        aCell.EntireRow.Select
+        Selection.Offset(2, 0).Select
+        rowNumber = Selection.Row
+        lastRowforOCEPC = rowNumber
     End If
-
-Set ws = Sheets("Sheet1")
-lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
-strSearch = "NAME OF GUARANTOR AFFILIATES"
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    aCell.EntireRow.Select
-    Selection.Offset(2, 0).Select
-    rowNumber = Selection.Row
-    lastRowforOCEPC = rowNumber
-End If
-
-lColor = RGB(0, 0, 128)
-Set MR = Range("B" & rowNumber, "B" & lastRow)
-
-'reset global values
-netWorthAffEntry = 0
-netWorthAffTotal = 0
-netProfit1AffEntry = 0
-netProfit1AffTotal = 0
-netProfit2AffEntry = 0
-netProfit2AffTotal = 0
-avgNetProfitAffEntry = 0
-avgNetProfitAffTotal = 0
-
-'Calculate Affiliates section
-For Each aCell In MR
-If aCell.Interior.Color = lColor Then
-    aCell.Select
-    rowNumber = Selection.Row
-    aCell.Select
-    Selection.Offset(0, 6).Select 'for net worth cells
-    netWorthAffEntry = Cells(rowNumber, "H").Value
-    netWorthAffTotal = netWorthAffEntry + netWorthAffTotal
     
-    Selection.Offset(0, 1).Select 'for TR Net Profit 1st column cells
-    netProfit1AffEntry = Cells(rowNumber, "I").Value
-    netProfit1AffTotal = netProfit1AffEntry + netProfit1AffTotal
+    lColor = RGB(0, 0, 128)
+    Set MR = Range("B" & rowNumber, "B" & lastRow)
     
-    Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
-    netProfit2AffEntry = Cells(rowNumber, "J").Value
-    netProfit2AffTotal = netProfit2AffEntry + netProfit2AffTotal
+    'reset global values
+    netWorthAffEntry = 0
+    netWorthAffTotal = 0
+    netProfit1AffEntry = 0
+    netProfit1AffTotal = 0
+    netProfit2AffEntry = 0
+    netProfit2AffTotal = 0
+    avgNetProfitAffEntry = 0
+    avgNetProfitAffTotal = 0
     
-    Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
-    avgNetProfitAffEntry = Cells(rowNumber, "K").Value
-    avgNetProfitAffTotal = avgNetProfitAffEntry + avgNetProfitAffTotal
-
-End If
-Next aCell
-
-strSearch = "NAME OF OC and/or EPC ENTITIES"
-
-Set bCell = ws.Range("B7:B" & lastRowforOCEPC).Find(What:=strSearch, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not bCell Is Nothing Then
-    bCell.EntireRow.Select
-    Selection.Offset(2, 0).Select
-    rowNumber = Selection.Row
-End If
-
-lColor = RGB(0, 0, 128)
-Set MR = Range("B" & rowNumber, "B" & lastRowforOCEPC)
-
-'reset global values
-netWorthOCEPCEntry = 0
-netWorthOCEPCTotal = 0
-netProfit1OCEPCEntry = 0
-netProfit1OCEPCTotal = 0
-netProfit2OCEPCEntry = 0
-netProfit2OCEPCTotal = 0
-avgNetProfitOCEPCEntry = 0
-avgNetProfitOCEPCTotal = 0
-
-'Calculate OC/EPC section
-For Each bCell In MR
-If bCell.Interior.Color = lColor Then
-    bCell.Select
-    rowNumber = Selection.Row
-    bCell.Select
-    Selection.Offset(0, 6).Select 'for net worth cells
-    netWorthOCEPCEntry = Cells(rowNumber, "H").Value
-    netWorthOCEPCTotal = netWorthOCEPCEntry + netWorthOCEPCTotal
+    'Calculate Affiliates section
+    For Each aCell In MR
+    If aCell.Interior.Color = lColor Then
+        aCell.Select
+        rowNumber = Selection.Row
+        aCell.Select
+        Selection.Offset(0, 6).Select 'for net worth cells
+        netWorthAffEntry = Cells(rowNumber, "H").Value
+        netWorthAffTotal = netWorthAffEntry + netWorthAffTotal
+        
+        Selection.Offset(0, 1).Select 'for TR Net Profit 1st column cells
+        netProfit1AffEntry = Cells(rowNumber, "I").Value
+        netProfit1AffTotal = netProfit1AffEntry + netProfit1AffTotal
+        
+        Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
+        netProfit2AffEntry = Cells(rowNumber, "J").Value
+        netProfit2AffTotal = netProfit2AffEntry + netProfit2AffTotal
+        
+        Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
+        avgNetProfitAffEntry = Cells(rowNumber, "K").Value
+        avgNetProfitAffTotal = avgNetProfitAffEntry + avgNetProfitAffTotal
     
-    Selection.Offset(0, 1).Select 'for TR Net Profit 1st colum cells
-    netProfit1OCEPCEntry = Cells(rowNumber, "I").Value
-    netProfit1OCEPCTotal = netProfit1OCEPCEntry + netProfit1OCEPCTotal
+    End If
+    Next aCell
     
-    Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
-    netProfit2OCEPCEntry = Cells(rowNumber, "J").Value
-    netProfit2OCEPCTotal = netProfit2OCEPCEntry + netProfit2OCEPCTotal
+    strSearch = "NAME OF OC and/or EPC ENTITIES"
     
-    Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
-    avgNetProfitOCEPCEntry = Cells(rowNumber, "K").Value
-    avgNetProfitOCEPCTotal = avgNetProfitOCEPCEntry + avgNetProfitOCEPCTotal
-
-End If
-Next bCell
-
+    Set bCell = ws.Range("B7:B" & lastRowforOCEPC).Find(What:=strSearch, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not bCell Is Nothing Then
+        bCell.EntireRow.Select
+        Selection.Offset(2, 0).Select
+        rowNumber = Selection.Row
+    End If
+    
+    lColor = RGB(0, 0, 128)
+    Set MR = Range("B" & rowNumber, "B" & lastRowforOCEPC)
+    
+    'reset global values
+    netWorthOCEPCEntry = 0
+    netWorthOCEPCTotal = 0
+    netProfit1OCEPCEntry = 0
+    netProfit1OCEPCTotal = 0
+    netProfit2OCEPCEntry = 0
+    netProfit2OCEPCTotal = 0
+    avgNetProfitOCEPCEntry = 0
+    avgNetProfitOCEPCTotal = 0
+    
+    'Calculate OC/EPC section
+    For Each bCell In MR
+    If bCell.Interior.Color = lColor Then
+        bCell.Select
+        rowNumber = Selection.Row
+        bCell.Select
+        Selection.Offset(0, 6).Select 'for net worth cells
+        netWorthOCEPCEntry = Cells(rowNumber, "H").Value
+        netWorthOCEPCTotal = netWorthOCEPCEntry + netWorthOCEPCTotal
+        
+        Selection.Offset(0, 1).Select 'for TR Net Profit 1st colum cells
+        netProfit1OCEPCEntry = Cells(rowNumber, "I").Value
+        netProfit1OCEPCTotal = netProfit1OCEPCEntry + netProfit1OCEPCTotal
+        
+        Selection.Offset(0, 1).Select 'for TR Net Profit 2nd column cells
+        netProfit2OCEPCEntry = Cells(rowNumber, "J").Value
+        netProfit2OCEPCTotal = netProfit2OCEPCEntry + netProfit2OCEPCTotal
+        
+        Selection.Offset(0, 1).Select 'for TR AVG Net Profit 3rd column cells
+        avgNetProfitOCEPCEntry = Cells(rowNumber, "K").Value
+        avgNetProfitOCEPCTotal = avgNetProfitOCEPCEntry + avgNetProfitOCEPCTotal
+    
+    End If
+    Next bCell
 End Sub
 Sub countentities()
 
-Dim lColor As Long
-Dim ws As Worksheet
-Dim lastRow As Long, i As Long
-Dim strSearch As String
-Dim aCell As Range
-Dim rowNumber As Integer
-Dim counter As Integer
-
-counter = 0
-
-Set ws = Sheets("Sheet1")
-lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
-strSearch = "NAME OF GUARANTOR AFFILIATES"
-
-Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch, LookIn:=xlValues, _
-LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
-MatchCase:=False, SearchFormat:=False)
-If Not aCell Is Nothing Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.EntireRow.Select
-    Selection.Offset(2, 0).Select
-    rowNumber = Selection.Row
-End If
-
-lColor = RGB(0, 0, 128)
-Set MR = Range("B" & rowNumber, "B" & lastRow)
-
-
-'Set MR = Range("B7:B" & lastRow)
-
-For Each aCell In MR
-If aCell.Interior.Color = lColor Then
-    'MsgBox "Value Found in Cell " & aCell.Address
-    aCell.Select
-    rowNumber = Selection.Row
-    aCell.Select
-    counter = counter + 1
-    Selection.Offset(0, -1).Select
-    With Selection.Font
-        .Name = "Tahoma"
-        .Size = 14
-        .Bold = True
-    End With
-    Range("A" & CStr(rowNumber)) = counter
-
-    'ActiveCell = counter.Value
-End If
-Next aCell
+    Dim lColor As Long
+    Dim ws As Worksheet
+    Dim lastRow As Long, i As Long
+    Dim strSearch As String
+    Dim aCell As Range
+    Dim rowNumber As Integer
+    Dim counter As Integer
+    
+    counter = 0
+    
+    Set ws = Sheets("Sheet1")
+    lastRow = ws.Range("B" & Rows.Count).End(xlUp).Row
+    strSearch = "NAME OF GUARANTOR AFFILIATES"
+    
+    Set aCell = ws.Range("B7:B" & lastRow).Find(What:=strSearch, LookIn:=xlValues, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+    MatchCase:=False, SearchFormat:=False)
+    If Not aCell Is Nothing Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.EntireRow.Select
+        Selection.Offset(2, 0).Select
+        rowNumber = Selection.Row
+    End If
+    
+    lColor = RGB(0, 0, 128)
+    Set MR = Range("B" & rowNumber, "B" & lastRow)
+    
+    
+    'Set MR = Range("B7:B" & lastRow)
+    
+    For Each aCell In MR
+    If aCell.Interior.Color = lColor Then
+        'MsgBox "Value Found in Cell " & aCell.Address
+        aCell.Select
+        rowNumber = Selection.Row
+        aCell.Select
+        counter = counter + 1
+        Selection.Offset(0, -1).Select
+        With Selection.Font
+            .Name = "Tahoma"
+            .Size = 14
+            .Bold = True
+        End With
+        Range("A" & CStr(rowNumber)) = counter
+    
+        'ActiveCell = counter.Value
+    End If
+    Next aCell
 End Sub
