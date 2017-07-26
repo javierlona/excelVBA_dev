@@ -1,9 +1,9 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} Exhibit12 
    Caption         =   "Affiliates Worksheet ver. 7_16_2017"
-   ClientHeight    =   5184
-   ClientLeft      =   48
-   ClientTop       =   372
+   ClientHeight    =   5175
+   ClientLeft      =   45
+   ClientTop       =   375
    ClientWidth     =   9300
    OleObjectBlob   =   "Exhibit12.frx":0000
    StartUpPosition =   1  'CenterOwner
@@ -25,19 +25,20 @@ Private Sub CommandButton1_Click()
     MyValGA = Me.tbGA.Value
     MyValNGA = Me.tbNGA.Value
     
-    If MyValOCEPC <> 0 Then
+    
+    If MyValOCEPC > 0 Then
         string1 = "NAME OF OC and/or EPC ENTITIES"
         Call addEntity(string1, MyValOCEPC)
     End If
     
-    If MyValGA <> 0 Then
-        string1 = "NAME OF NON-GUARANTOR AFFILIATES"
-        Call addEntity(string1, MyValNGA)
-    End If
-    
-    If MyValNGA <> 0 Then
+    If MyValGA > 0 Then
         string1 = "NAME OF GUARANTOR AFFILIATES"
         Call addEntity(string1, MyValGA)
+    End If
+    
+    If MyValNGA > 0 Then
+        string1 = "NAME OF NON-GUARANTOR AFFILIATES"
+        Call addEntity(string1, MyValNGA)
     End If
     
     Call countentities
@@ -70,5 +71,13 @@ Private Sub CommandButton3_Click()
     Unload Me
     Exhibit12.Hide
     Activesheet.Protect Password:="txcdc1!", AllowDeletingRows:=True, AllowInsertingRows:=True, AllowFormattingRows:=True
+
+End Sub
+
+Private Sub tbGA_Change()
+
+End Sub
+
+Private Sub tbOCEPC_Change()
 
 End Sub
